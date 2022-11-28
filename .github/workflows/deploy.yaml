@@ -1,0 +1,12 @@
+name: HabSat - Deploy
+
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying to given environment
+        run: echo Mock

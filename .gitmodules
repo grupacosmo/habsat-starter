@@ -1,0 +1,24 @@
+[submodule "post-service"]
+	path = services/post-service
+	url = git@github.com:grupacosmo/habsat-post-service.git
+[submodule "gateway"]
+	path = services/gateway
+	url = git@github.com:grupacosmo/habsat-gateway.git
+[submodule "naming-server"]
+	path = services/naming-server
+	url = git@github.com:grupacosmo/habsat-naming-server.git
+[submodule "email-service"]
+	path = services/email-service
+	url = git@github.com:grupacosmo/habsat-email-service.git
+[submodule "flight-service"]
+	path = services/flight-service
+	url = git@github.com:grupacosmo/habsat-flight-service.git
+[submodule "user-service"]
+	path = services/user-service
+	url = git@github.com:grupacosmo/habsat-user-service.git
+[submodule "authorization-server"]
+	path = services/authorization-server
+	url = git@github.com:grupacosmo/habsat-authorization-server.git
+[submodule "cloud-config-server"]
+	path = services/cloud-config-server
+	url = git@github.com:grupacosmo/habsat-cloud-config-server.git

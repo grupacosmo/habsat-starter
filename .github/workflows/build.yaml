@@ -1,0 +1,41 @@
+name: HabSat - Build
+
+on:
+  workflow_call:
+    inputs:
+      DOCKER_HUB_REPOSITORY:
+        required: true
+        type: string
+      DOCKER_HUB_TAGS:
+        required: true
+        type: string
+    secrets:
+      DOCKER_HUB_USERNAME:
+        required: false
+      DOCKER_HUB_PASSWORD:
+        required: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots package -DskipTests
+      - name: Debug
+        run: |
+          echo "${{ inputs.DOCKER_HUB_REPOSITORY }} ${{ inputs.DOCKER_HUB_TAGS }}"
+      - name: Publish to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          repository: ${{ inputs.DOCKER_HUB_REPOSITORY }}
+          tags: ${{ inputs.DOCKER_HUB_TAGS }}
