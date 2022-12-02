@@ -1,0 +1,4 @@
+POSTGRES_USERNAME: postgres
+POSTGRES_PASSWORD: postgres
+POSTGRES_DSN: jdbc:postgresql://postgres:5432/postgres?currentSchema=users
+EUREKA_SERVICE_URL: http://naming-server:8761/eureka

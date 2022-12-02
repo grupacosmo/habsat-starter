@@ -19,6 +19,6 @@
 [submodule "authorization-server"]
 	path = services/authorization-server
 	url = git@github.com:grupacosmo/habsat-authorization-server.git
-[submodule "cloud-config-server"]
-	path = services/cloud-config-server
-	url = git@github.com:grupacosmo/habsat-cloud-config-server.git
+[submodule "config-server"]
+	path = services/config-server
+	url = git@github.com:grupacosmo/habsat-config-server.git

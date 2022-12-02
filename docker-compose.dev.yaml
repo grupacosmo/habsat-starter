@@ -17,8 +17,6 @@ services:
     image: cosmopk/habsat-naming-server:master
     container_name: naming-server
     restart: unless-stopped
-    ports:
-      - '8761:8761'
     networks:
       - habsat_network
 
@@ -28,21 +26,22 @@ services:
     restart: unless-stopped
     environment:
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
-    ports:
-      - '8080:8080'
     depends_on:
       - naming-server
     networks:
       - habsat_network
 
-  cloud-config-server:
-    image: cosmopk/habsat-cloud-config-server:master
-    container_name: authorization-server
+  config-server:
+    image: cosmopk/habsat-config-server:master
+    container_name: config-server
     restart: unless-stopped
     environment:
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
+      CONFIG_PATH: '/config'
     depends_on:
-      - gateway
+      - naming-server
+    volumes:
+      - ./.configs:/config
     networks:
       - habsat_network
 
@@ -50,9 +49,8 @@ services:
     image: cosmopk/habsat-authorization-server:master
     container_name: authorization-server
     restart: unless-stopped
-    environment:
-      EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
     depends_on:
+      - naming-server
       - gateway
     networks:
       - habsat_network
@@ -61,13 +59,9 @@ services:
     image: cosmopk/habsat-email-service:master
     container_name: email-service
     restart: unless-stopped
-    environment:
-      EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DSN: ${POSTGRES_EMAIL_SERVICE_DSN}
     depends_on:
       - postgres
+      - naming-server
       - gateway
     networks:
       - habsat_network
@@ -76,20 +70,11 @@ services:
     image: cosmopk/habsat-post-service:master
     container_name: post-service
     restart: unless-stopped
-    environment:
-      EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DSN: ${POSTGRES_POST_SERVICE_DSN}
-      AWS_ENDPOINT_URL: ${AWS_ENDPOINT_URL}
-      AWS_REGION: ${AWS_REGION}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_BUCKET_NAME: ${AWS_BUCKET_NAME}
     depends_on:
+      - naming-server
+      - gateway
       - postgres
       - aws
-      - gateway
     networks:
       - habsat_network
 
@@ -97,28 +82,20 @@ services:
     image: cosmopk/habsat-user-service:master
     container_name: user-service
     restart: unless-stopped
-    environment:
-      EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DSN: ${POSTGRES_USER_SERVICE_DSN}
     depends_on:
       - postgres
+      - naming-server
       - gateway
     networks:
       - habsat_network
 
   flight-service:
     image: cosmopk/habsat-flight-service:master
-    container_name: user-service
+    container_name: flight-service
     restart: unless-stopped
-    environment:
-      EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DSN: ${POSTGRES_FLIGHT_SERVICE_DSN}
     depends_on:
       - postgres
+      - naming-server
       - gateway
     networks:
       - habsat_network
@@ -137,6 +114,17 @@ services:
     volumes:
       - habsat_postgres:/var/lib/postgresql/data
       - ./.postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  mongo:
+    image: mongo:5.0
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    networks:
+      - habsat_network
+    volumes:
+      - habsat_mongo:/data/db
 
   aws:
     image: localstack/localstack:latest
@@ -163,4 +151,5 @@ networks:
 
 volumes:
   habsat_postgres: null
+  habsat_mongo: null
   habsat_aws: null
