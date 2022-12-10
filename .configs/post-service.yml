@@ -1,7 +1,7 @@
-POSTGRES_USERNAME: postgres
-POSTGRES_PASSWORD: postgres
-POSTGRES_DSN: jdbc:postgresql://postgres:5432/postgres?currentSchema=posts
-AWS_ENDPOINT_URL: http://localhost:4566
+MONGO_HOST: mongo
+MONGO_PORT: 27017
+MONGO_DB: posts
+AWS_ENDPOINT_URL: http://aws:4566
 AWS_REGION: eu-west-1
 AWS_ACCESS_KEY_ID: habsat
 AWS_SECRET_ACCESS_KEY: habsat

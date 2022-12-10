@@ -13,92 +13,22 @@ services:
     networks:
       - habsat_network
 
-  naming-server:
-    image: cosmopk/habsat-naming-server:master
-    container_name: naming-server
-    restart: unless-stopped
-    networks:
-      - habsat_network
-
-  gateway:
-    image: cosmopk/habsat-gateway:master
-    container_name: gateway
-    restart: unless-stopped
-    environment:
-      EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
-    depends_on:
-      - naming-server
-    networks:
-      - habsat_network
-
-  config-server:
-    image: cosmopk/habsat-config-server:master
-    container_name: config-server
-    restart: unless-stopped
-    environment:
-      EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
-      CONFIG_PATH: '/config'
-    depends_on:
-      - naming-server
-    volumes:
-      - ./.configs:/config
-    networks:
-      - habsat_network
-
-  authorization-server:
-    image: cosmopk/habsat-authorization-server:master
-    container_name: authorization-server
-    restart: unless-stopped
-    depends_on:
-      - naming-server
-      - gateway
-    networks:
-      - habsat_network
-
   email-service:
-    image: cosmopk/habsat-email-service:master
-    container_name: email-service
-    restart: unless-stopped
     depends_on:
       - postgres
-      - naming-server
-      - gateway
-    networks:
-      - habsat_network
 
   post-service:
-    image: cosmopk/habsat-post-service:master
-    container_name: post-service
-    restart: unless-stopped
     depends_on:
-      - naming-server
-      - gateway
-      - postgres
+      - mongo
       - aws
-    networks:
-      - habsat_network
 
   user-service:
-    image: cosmopk/habsat-user-service:master
-    container_name: user-service
-    restart: unless-stopped
     depends_on:
       - postgres
-      - naming-server
-      - gateway
-    networks:
-      - habsat_network
 
   flight-service:
-    image: cosmopk/habsat-flight-service:master
-    container_name: flight-service
-    restart: unless-stopped
     depends_on:
       - postgres
-      - naming-server
-      - gateway
-    networks:
-      - habsat_network
 
   postgres:
     image: postgres:14-alpine
@@ -146,10 +76,7 @@ services:
       - habsat_aws:/tmp/localstack
       - ./.aws/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d
 
-networks:
-  habsat_network: null
-
 volumes:
-  habsat_postgres: null
-  habsat_mongo: null
-  habsat_aws: null
+  habsat_postgres:
+  habsat_mongo:
+  habsat_aws:

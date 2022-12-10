@@ -26,7 +26,7 @@ TODO: High level project description.
 2. Create your own version of `docker-compose.dev.yaml` and name it `docker-compose.yaml`.
    This file will be used for local development and must not be added to the repository.
    ```shell
-   cp docker-compose.dev.yaml docker-compose.yaml
+   cp docker-compose.dev.yaml docker-compose.xxx..yaml
    ```
 3. Now you cen start project with following command.
    ```shell
