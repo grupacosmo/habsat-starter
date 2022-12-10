@@ -4,7 +4,7 @@ default:
 	@echo "Happy hacking!"
 
 init:
-	echo "version: '3.8'" >> docker-compose.yaml
+	find .configs -name '*.example.yml' | sed 'p;s/.example//g' | cat | paste - - --delimiters=" " | xargs -n 2 cp -n
 
 start:
 	docker-compose -f docker-compose.prod.yaml -f docker-compose.dev.yaml -f docker-compose.yaml up -d

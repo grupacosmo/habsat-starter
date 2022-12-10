@@ -6,6 +6,8 @@ target/
 .env
 docker-compose.yaml
 docker-compose.yml
+.configs/**
+~./configs/*.example.yml
 
 ### STS ###
 .apt_generated
