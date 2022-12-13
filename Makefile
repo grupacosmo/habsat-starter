@@ -3,8 +3,9 @@
 default:
 	@echo "Happy hacking!"
 
-init:
-	find .configs -name '*.example.yml' | sed 'p;s/.example//g' | cat | paste - - --delimiters=" " | xargs -n 2 cp -n
+init: pull-submodules
+	find .configs -name '*.example.yml' | sed 'p;s/.example//g' | cat | paste - - --delimiters=" " | xargs -n 2 cp
+	echo -en "version: '3.8'\n\n#services:" > docker-compose.yaml
 
 start:
 	docker-compose -f docker-compose.prod.yaml -f docker-compose.dev.yaml -f docker-compose.yaml up -d
@@ -17,3 +18,6 @@ rebuild: restart-gateway
 
 restart-gateway:
 	docker-compose restart gateway
+
+pull-submodules:
+	git submodule update --remote
