@@ -35,9 +35,9 @@ TODO: High level project description.
 
 ### Application URLs
 
-* `api.habsat.localhost`
-* `naming-server.habsat.localhost`
-* `config-server.habsat.localhost`
+* `api.habsat.localhost` - application entry point (gateway)
+* `api.habsat.localhost/docs` - api documentation
+* `naming-server.habsat.localhost` - naming server dashboard
 
 ---
 
