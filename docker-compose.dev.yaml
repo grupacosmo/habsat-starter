@@ -13,37 +13,28 @@ services:
     networks:
       - habsat_network
 
-  email-service:
+  authorization-server:
     depends_on:
-      - postgres
+      - mongo
 
   post-service:
+    volumes:
+      - $HOME/.m2:/root/.m2
     depends_on:
       - mongo
       - aws
 
   user-service:
+    volumes:
+      - $HOME/.m2:/root/.m2
     depends_on:
-      - postgres
+      - mongo
 
   flight-service:
-    depends_on:
-      - postgres
-
-  postgres:
-    image: postgres:14-alpine
-    container_name: postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - '5432:5432'
-    networks:
-      - habsat_network
     volumes:
-      - habsat_postgres:/var/lib/postgresql/data
-      - ./.postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - $HOME/.m2:/root/.m2
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:5.0
@@ -77,6 +68,5 @@ services:
       - ./.aws/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d
 
 volumes:
-  habsat_postgres:
   habsat_mongo:
   habsat_aws:

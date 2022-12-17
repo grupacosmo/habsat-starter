@@ -39,9 +39,6 @@ services:
     container_name: email-service
     restart: unless-stopped
     environment:
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DSN: ${POSTGRES_EMAIL_SERVICE_DSN}
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
     depends_on:
       - naming-server
@@ -74,9 +71,9 @@ services:
     container_name: user-service
     restart: unless-stopped
     environment:
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DSN: ${POSTGRES_USER_SERVICE_DSN}
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+      MONGO_DB: ${USER_SERVICE_MONGO_DB}
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
     depends_on:
       - naming-server
@@ -89,9 +86,9 @@ services:
     container_name: flight-service
     restart: unless-stopped
     environment:
-      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DSN: ${POSTGRES_FLIGHT_SERVICE_DSN}
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+      MONGO_DB: ${FLIGHT_SERVICE_MONGO_DB}
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
     depends_on:
       - naming-server

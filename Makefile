@@ -11,10 +11,13 @@ start:
 	docker-compose -f docker-compose.prod.yaml -f docker-compose.dev.yaml -f docker-compose.yaml up -d
 
 stop:
-	docker-compose -f docker-compose.prod.yaml -f docker-compose.dev.yaml -f docker-compose.yaml down
+	docker-compose -f docker-compose.prod.yaml -f docker-compose.dev.yaml -f docker-compose.yaml down --remove-orphans
 
-rebuild: restart-gateway
+restart: restart-gateway
 	docker-compose -f docker-compose.prod.yaml -f docker-compose.dev.yaml -f docker-compose.yaml up -d --build
+
+prune:
+	docker-compose -f docker-compose.prod.yaml -f docker-compose.dev.yaml -f docker-compose.yaml down -v
 
 restart-gateway:
 	docker-compose restart gateway
