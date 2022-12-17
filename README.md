@@ -28,7 +28,7 @@ TODO: High level project description.
    `post-service`, `user-service`, etc.
    ```shell
      gateway:
-       image: cosmopk/habsat-gateway:master
+       build: services/gateway
    ```
    When you are doing it for the first time you also have to uncomment `services` property (just remove hash `#` sign).</br>
    After any changes in `docker-compose.yml` you need to restart the project (same command in paragraph 2).
