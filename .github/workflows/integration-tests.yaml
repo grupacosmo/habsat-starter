@@ -1,0 +1,22 @@
+name: HabSat - Integration Tests
+
+on:
+  workflow_call:
+
+jobs:
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: "11"
+          distribution: "adopt"
+          cache: maven
+      - name: Perform Unit Tests
+        run: mvn test -Dtest=*UnitTest -DfailIfNoTests=false
+      - name: Perform Integration Tests
+        run: mvn test -Dtest=*IntegrationTest -DfailIfNoTests=false
