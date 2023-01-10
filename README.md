@@ -6,24 +6,25 @@ TODO: High level project description.
 
 ### Project requirements
 
-* docker (recommended version: `latest`)
-* docker-compose (recommended version: `latest`)
-* make (recommended version: `latest`)
+- docker (recommended version: `latest`)
+- docker-compose (recommended version: `latest`)
+- make (recommended version: `latest`)
+- yq (recommended version: `latest`)
 
 ### How to start working with this project?
 
-1. Clone this repository with following command.  
-    ```shell
-    git clone git@github.com:grupacosmo/habsat-starter.git --recursive
-    ```
+1. Clone this repository with following command.
+   ```shell
+   git clone git@github.com:grupacosmo/habsat-starter.git --recursive
+   ```
 2. Run following commands to prepare your local environment and start project.
    ```shell
    make init
    make start
    ```
-3. By default, all services are started from docker images. For repositories, you intend to work with, you need to 
+3. By default, all services are started from docker images. For repositories, you intend to work with, you need to
    override the `image` property with `build` property in `docker-compose.yaml`. Following example show what lines
-   you have to add under `services` section in `docker-compose.yaml` when you want to start `gateway` from your 
+   you have to add under `services` section in `docker-compose.yaml` when you want to start `gateway` from your
    local version of code. For other services you just have to replace `gateway` with appropriate service name like
    `post-service`, `user-service`, etc.
    ```shell
@@ -35,9 +36,9 @@ TODO: High level project description.
 
 ### Application URLs
 
-* `api.habsat.localhost` - application entry point (gateway)
-* `api.habsat.localhost/docs` - api documentation
-* `naming-server.habsat.localhost` - naming server dashboard
+- `api.habsat.localhost` - application entry point (gateway)
+- `api.habsat.localhost/docs` - api documentation
+- `naming-server.habsat.localhost` - naming server dashboard
 
 ---
 
