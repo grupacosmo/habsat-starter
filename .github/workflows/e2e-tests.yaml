@@ -1,0 +1,12 @@
+name: HabSat - E2E Tests
+
+on:
+  workflow_call:
+
+jobs:
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Perform E2E Tests
+        run: echo Mock
