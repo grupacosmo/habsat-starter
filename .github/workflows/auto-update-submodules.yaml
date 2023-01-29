@@ -3,6 +3,7 @@ name: Update submodules
 on:
   schedule:
     - cron: "0 0 * * 6"
+  workflow_dispatch:
 
 jobs:
   update_submodules:
@@ -10,6 +11,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: true
       - name: Update submodules
         run: |
           git submodule sync
