@@ -24,8 +24,7 @@ services:
     container_name: authorization-server
     restart: unless-stopped
     environment:
-      MONGO_HOST: ${MONGO_HOST}
-      MONGO_PORT: ${MONGO_PORT}
+      MONGO_URI: ${MONGO_URI}
       MONGO_DB: ${AUTHORIZATION_SERVER_MONGO_DB}
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
     depends_on:
@@ -51,8 +50,7 @@ services:
     container_name: post-service
     restart: unless-stopped
     environment:
-      MONGO_HOST: ${MONGO_HOST}
-      MONGO_PORT: ${MONGO_PORT}
+      MONGO_URI: ${MONGO_URI}
       MONGO_DB: ${POST_SERVICE_MONGO_DB}
       AWS_ENDPOINT_URL: ${AWS_ENDPOINT_URL}
       AWS_REGION: ${AWS_REGION}
@@ -71,8 +69,7 @@ services:
     container_name: user-service
     restart: unless-stopped
     environment:
-      MONGO_HOST: ${MONGO_HOST}
-      MONGO_PORT: ${MONGO_PORT}
+      MONGO_URI: ${MONGO_URI}
       MONGO_DB: ${USER_SERVICE_MONGO_DB}
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
     depends_on:
@@ -86,8 +83,7 @@ services:
     container_name: flight-service
     restart: unless-stopped
     environment:
-      MONGO_HOST: ${MONGO_HOST}
-      MONGO_PORT: ${MONGO_PORT}
+      MONGO_URI: ${MONGO_URI}
       MONGO_DB: ${FLIGHT_SERVICE_MONGO_DB}
       EUREKA_SERVICE_URL: ${EUREKA_SERVICE_URL}
     depends_on:
